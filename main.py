@@ -7,7 +7,7 @@ if __name__ == '__main__':
     device = 0
     net=model.load_model(model_id,device)
 
-    img0 = cv2.imread('/home/roota/workstation/onnx2caffe/linux-caffe/data/dogandgirl.webp')
+    img0 = cv2.imread('/data/dogandgirl.webp')
     img1 = data.data_pre_process(img0)
 
     output = model.predict(net, img1)
