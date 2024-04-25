@@ -1,0 +1,38 @@
+2024-04-25 05:09:17,111 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-04-25 05:09:17,112 - INFO - [33mPress CTRL+C to quit[0m
+2024-04-25 05:09:17,113 - INFO -  * Restarting with stat
+2024-04-25 05:09:17,574 - WARNING -  * Debugger is active!
+2024-04-25 05:09:17,574 - INFO -  * Debugger PIN: 761-591-029
+2024-04-25 05:10:00,880 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-04-25 05:10:00,880 - INFO - [33mPress CTRL+C to quit[0m
+2024-04-25 05:10:00,882 - INFO -  * Restarting with stat
+2024-04-25 05:10:01,316 - WARNING -  * Debugger is active!
+2024-04-25 05:10:01,316 - INFO -  * Debugger PIN: 761-591-029
+2024-04-25 05:10:31,375 - INFO - 127.0.0.1 - - [25/Apr/2024 05:10:31] "GET / HTTP/1.1" 200 -
+2024-04-25 05:10:34,634 - INFO - 127.0.0.1 - - [25/Apr/2024 05:10:34] "GET /video_feed HTTP/1.1" 200 -
+2024-04-25 05:12:05,090 - INFO -  * Detected change in '/home/roota/workstation/onnx2caffe/linux-caffe/src/model.py', reloading
+2024-04-25 05:12:05,171 - INFO -  * Restarting with stat
+2024-04-25 05:12:05,562 - WARNING -  * Debugger is active!
+2024-04-25 05:12:05,562 - INFO -  * Debugger PIN: 761-591-029
+2024-04-25 05:12:06,575 - INFO -  * Detected change in '/home/roota/workstation/onnx2caffe/linux-caffe/src/model.py', reloading
+2024-04-25 05:12:06,642 - INFO -  * Restarting with stat
+2024-04-25 05:12:06,997 - WARNING -  * Debugger is active!
+2024-04-25 05:12:06,997 - INFO -  * Debugger PIN: 761-591-029
+2024-04-25 05:12:28,928 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-04-25 05:12:28,928 - INFO - [33mPress CTRL+C to quit[0m
+2024-04-25 05:12:28,930 - INFO -  * Restarting with stat
+2024-04-25 05:12:29,316 - WARNING -  * Debugger is active!
+2024-04-25 05:12:29,316 - INFO -  * Debugger PIN: 761-591-029
+2024-04-25 05:15:51,585 - INFO - 127.0.0.1 - - [25/Apr/2024 05:15:51] "GET / HTTP/1.1" 200 -
+2024-04-25 05:15:54,982 - INFO - 127.0.0.1 - - [25/Apr/2024 05:15:54] "GET /video_feed HTTP/1.1" 200 -
+2024-04-25 05:16:04,745 - INFO -  * Detected change in '/home/roota/workstation/onnx2caffe/linux-caffe/src/model.py', reloading
+2024-04-25 05:16:04,799 - INFO -  * Restarting with stat
+2024-04-25 05:16:05,177 - WARNING -  * Debugger is active!
+2024-04-25 05:16:05,177 - INFO -  * Debugger PIN: 761-591-029
+2024-04-25 05:17:13,546 - INFO -  * Detected change in '/home/roota/workstation/onnx2caffe/linux-caffe/app.py', reloading
+2024-04-25 05:17:13,610 - INFO -  * Restarting with stat
+2024-04-25 05:17:13,981 - WARNING -  * Debugger is active!
+2024-04-25 05:17:13,981 - INFO -  * Debugger PIN: 761-591-029

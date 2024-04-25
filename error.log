@@ -1,1 +1,41 @@
 2024-04-23 23:30:16,615 - ERROR - Model id not found
+2024-04-25 05:17:29,061 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-04-25 05:17:29,062 - INFO - [33mPress CTRL+C to quit[0m
+2024-04-25 05:17:29,064 - INFO -  * Restarting with stat
+2024-04-25 05:17:29,463 - WARNING -  * Debugger is active!
+2024-04-25 05:17:29,464 - INFO -  * Debugger PIN: 761-591-029
+2024-04-25 05:17:35,405 - INFO - 127.0.0.1 - - [25/Apr/2024 05:17:35] "GET / HTTP/1.1" 200 -
+2024-04-25 05:17:39,419 - INFO - 127.0.0.1 - - [25/Apr/2024 05:17:39] "GET /video_feed HTTP/1.1" 200 -
+2024-04-25 05:19:16,017 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-04-25 05:19:16,017 - INFO - [33mPress CTRL+C to quit[0m
+2024-04-25 05:19:16,019 - INFO -  * Restarting with stat
+2024-04-25 05:19:16,387 - WARNING -  * Debugger is active!
+2024-04-25 05:19:16,387 - INFO -  * Debugger PIN: 761-591-029
+2024-04-25 05:19:19,463 - INFO - 127.0.0.1 - - [25/Apr/2024 05:19:19] "GET / HTTP/1.1" 200 -
+2024-04-25 05:19:36,369 - INFO - 127.0.0.1 - - [25/Apr/2024 05:19:36] "GET /video_feed HTTP/1.1" 200 -
+2024-04-25 05:21:50,110 - INFO -  * Detected change in '/home/roota/workstation/onnx2caffe/linux-caffe/app.py', reloading
+2024-04-25 05:21:50,221 - INFO -  * Restarting with stat
+2024-04-25 05:21:50,570 - WARNING -  * Debugger is active!
+2024-04-25 05:21:50,571 - INFO -  * Debugger PIN: 761-591-029
+2024-04-25 05:21:51,585 - INFO -  * Detected change in '/home/roota/workstation/onnx2caffe/linux-caffe/app.py', reloading
+2024-04-25 05:21:51,643 - INFO -  * Restarting with stat
+2024-04-25 05:21:52,022 - WARNING -  * Debugger is active!
+2024-04-25 05:21:52,022 - INFO -  * Debugger PIN: 761-591-029
+2024-04-25 05:22:00,921 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-04-25 05:22:00,921 - INFO - [33mPress CTRL+C to quit[0m
+2024-04-25 05:22:00,923 - INFO -  * Restarting with stat
+2024-04-25 05:22:01,326 - WARNING -  * Debugger is active!
+2024-04-25 05:22:01,326 - INFO -  * Debugger PIN: 761-591-029
+2024-04-25 05:22:03,979 - INFO - 127.0.0.1 - - [25/Apr/2024 05:22:03] "GET / HTTP/1.1" 200 -
+2024-04-25 05:22:10,065 - INFO - 127.0.0.1 - - [25/Apr/2024 05:22:10] "GET /video_feed HTTP/1.1" 200 -
+2024-04-25 05:23:24,023 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-04-25 05:23:24,023 - INFO - [33mPress CTRL+C to quit[0m
+2024-04-25 05:23:24,025 - INFO -  * Restarting with stat
+2024-04-25 05:23:24,458 - WARNING -  * Debugger is active!
+2024-04-25 05:23:24,458 - INFO -  * Debugger PIN: 761-591-029
+2024-04-25 05:23:28,290 - INFO - 127.0.0.1 - - [25/Apr/2024 05:23:28] "GET / HTTP/1.1" 200 -
+2024-04-25 05:23:35,084 - INFO - 127.0.0.1 - - [25/Apr/2024 05:23:35] "GET /video_feed HTTP/1.1" 200 -
