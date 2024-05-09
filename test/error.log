@@ -36,3 +36,156 @@
 2024-04-25 05:17:13,610 - INFO -  * Restarting with stat
 2024-04-25 05:17:13,981 - WARNING -  * Debugger is active!
 2024-04-25 05:17:13,981 - INFO -  * Debugger PIN: 761-591-029
+2024-05-06 20:53:39,889 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-05-06 20:53:39,904 - INFO - [33mPress CTRL+C to quit[0m
+2024-05-06 20:53:39,906 - INFO -  * Restarting with stat
+2024-05-06 20:53:40,764 - WARNING -  * Debugger is active!
+2024-05-06 20:53:40,764 - INFO -  * Debugger PIN: 264-825-865
+2024-05-06 20:54:31,476 - INFO -  * Detected change in '/workdir_test/0_hjl/git/linux-caffe/test/rtsp_test.py', reloading
+2024-05-06 20:54:32,392 - INFO -  * Restarting with stat
+2024-05-06 20:54:33,230 - WARNING -  * Debugger is active!
+2024-05-06 20:54:33,230 - INFO -  * Debugger PIN: 264-825-865
+2024-05-06 20:55:25,541 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.2.4:5000
+2024-05-06 20:55:25,541 - INFO - [33mPress CTRL+C to quit[0m
+2024-05-06 20:55:25,542 - INFO -  * Restarting with stat
+2024-05-06 20:55:26,391 - WARNING -  * Debugger is active!
+2024-05-06 20:55:26,391 - INFO -  * Debugger PIN: 264-825-865
+2024-05-06 20:55:29,521 - INFO - 192.168.2.198 - - [06/May/2024 20:55:29] "GET / HTTP/1.1" 200 -
+2024-05-06 20:55:31,485 - INFO - 192.168.2.198 - - [06/May/2024 20:55:31] "GET /video_feed HTTP/1.1" 200 -
+2024-05-06 20:55:31,502 - INFO - 192.168.2.198 - - [06/May/2024 20:55:31] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-05-06 20:56:10,546 - INFO -  * Detected change in '/workdir_test/0_hjl/git/linux-caffe/test/rtsp_test.py', reloading
+2024-05-06 20:56:10,654 - INFO -  * Restarting with stat
+2024-05-06 20:56:11,513 - WARNING -  * Debugger is active!
+2024-05-06 20:56:11,513 - INFO -  * Debugger PIN: 264-825-865
+2024-05-06 20:56:14,835 - INFO -  * Detected change in '/workdir_test/0_hjl/git/linux-caffe/test/rtsp_test.py', reloading
+2024-05-06 20:56:14,951 - INFO -  * Restarting with stat
+2024-05-06 20:56:15,813 - WARNING -  * Debugger is active!
+2024-05-06 20:56:15,814 - INFO -  * Debugger PIN: 264-825-865
+2024-05-06 20:56:18,245 - INFO - 192.168.2.198 - - [06/May/2024 20:56:18] "GET / HTTP/1.1" 200 -
+2024-05-06 20:56:20,718 - INFO - 192.168.2.198 - - [06/May/2024 20:56:20] "GET /video_feed HTTP/1.1" 200 -
+2024-05-06 20:57:20,321 - INFO -  * Detected change in '/workdir_test/0_hjl/git/linux-caffe/test/rtsp_test.py', reloading
+2024-05-06 20:57:20,442 - INFO -  * Restarting with stat
+2024-05-06 20:57:21,289 - WARNING -  * Debugger is active!
+2024-05-06 20:57:21,290 - INFO -  * Debugger PIN: 264-825-865
+2024-05-06 20:57:22,449 - INFO -  * Detected change in '/workdir_test/0_hjl/git/linux-caffe/test/rtsp_test.py', reloading
+2024-05-06 20:57:22,541 - INFO -  * Restarting with stat
+2024-05-06 20:57:23,447 - WARNING -  * Debugger is active!
+2024-05-06 20:57:23,447 - INFO -  * Debugger PIN: 264-825-865
+2024-05-06 20:57:25,188 - INFO - 192.168.2.198 - - [06/May/2024 20:57:25] "GET / HTTP/1.1" 200 -
+2024-05-06 20:57:27,422 - INFO - 192.168.2.198 - - [06/May/2024 20:57:27] "GET /video_feed HTTP/1.1" 200 -
+2024-05-06 20:58:23,752 - INFO -  * Detected change in '/workdir_test/0_hjl/git/linux-caffe/test/rtsp_test.py', reloading
+2024-05-06 20:58:28,821 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.2.4:5000
+2024-05-06 20:58:28,821 - INFO - [33mPress CTRL+C to quit[0m
+2024-05-06 20:58:28,822 - INFO -  * Restarting with stat
+2024-05-06 20:58:29,714 - WARNING -  * Debugger is active!
+2024-05-06 20:58:29,715 - INFO -  * Debugger PIN: 264-825-865
+2024-05-06 20:58:32,509 - INFO - 192.168.2.198 - - [06/May/2024 20:58:32] "GET / HTTP/1.1" 200 -
+2024-05-06 20:58:34,217 - INFO - 192.168.2.198 - - [06/May/2024 20:58:34] "GET /video_feed HTTP/1.1" 200 -
+2024-05-07 10:13:11,266 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.2.4:5000
+2024-05-07 10:13:11,283 - INFO - [33mPress CTRL+C to quit[0m
+2024-05-07 10:13:11,284 - INFO -  * Restarting with stat
+2024-05-07 10:13:12,122 - WARNING -  * Debugger is active!
+2024-05-07 10:13:12,123 - INFO -  * Debugger PIN: 264-825-865
+2024-05-07 10:13:18,108 - INFO - 192.168.2.198 - - [07/May/2024 10:13:18] "GET / HTTP/1.1" 200 -
+2024-05-07 10:13:23,725 - INFO - 192.168.2.198 - - [07/May/2024 10:13:23] "GET /video_feed HTTP/1.1" 200 -
+2024-05-07 10:13:28,197 - INFO - 192.168.2.198 - - [07/May/2024 10:13:28] "GET /video_feed1 HTTP/1.1" 200 -
+2024-05-07 10:13:28,212 - INFO - 192.168.2.198 - - [07/May/2024 10:13:28] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-05-07 10:14:36,408 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.2.4:5000
+2024-05-07 10:14:36,408 - INFO - [33mPress CTRL+C to quit[0m
+2024-05-07 10:14:36,409 - INFO -  * Restarting with stat
+2024-05-07 10:14:37,251 - WARNING -  * Debugger is active!
+2024-05-07 10:14:37,251 - INFO -  * Debugger PIN: 264-825-865
+2024-05-07 10:14:39,305 - INFO - 192.168.2.198 - - [07/May/2024 10:14:39] "GET / HTTP/1.1" 200 -
+2024-05-07 10:14:39,321 - INFO - 192.168.2.198 - - [07/May/2024 10:14:39] "[33mGET /video_feed1 HTTP/1.1[0m" 404 -
+2024-05-07 10:14:43,277 - INFO - 192.168.2.198 - - [07/May/2024 10:14:43] "GET /video_feed HTTP/1.1" 200 -
+2024-05-07 10:29:10,891 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.2.4:5000
+2024-05-07 10:29:10,891 - INFO - [33mPress CTRL+C to quit[0m
+2024-05-07 10:29:10,892 - INFO -  * Restarting with stat
+2024-05-07 10:29:11,768 - WARNING -  * Debugger is active!
+2024-05-07 10:29:11,768 - INFO -  * Debugger PIN: 264-825-865
+2024-05-07 10:29:14,693 - INFO - 192.168.2.198 - - [07/May/2024 10:29:14] "GET / HTTP/1.1" 200 -
+2024-05-07 10:29:18,072 - INFO - 192.168.2.198 - - [07/May/2024 10:29:18] "GET /video_feed HTTP/1.1" 200 -
+2024-05-07 10:29:25,197 - INFO - 192.168.2.198 - - [07/May/2024 10:29:25] "GET /video_feed1 HTTP/1.1" 200 -
+2024-05-07 10:35:57,689 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.2.4:5000
+2024-05-07 10:35:57,689 - INFO - [33mPress CTRL+C to quit[0m
+2024-05-07 10:35:57,689 - INFO -  * Restarting with stat
+2024-05-07 10:35:58,505 - WARNING -  * Debugger is active!
+2024-05-07 10:35:58,505 - INFO -  * Debugger PIN: 264-825-865
+2024-05-07 10:36:29,583 - INFO - 192.168.2.198 - - [07/May/2024 10:36:29] "GET / HTTP/1.1" 200 -
+2024-05-07 10:36:29,597 - INFO - 192.168.2.198 - - [07/May/2024 10:36:29] "[33mGET /video_feed HTTP/1.1[0m" 404 -
+2024-05-07 10:36:39,483 - INFO - 192.168.2.198 - - [07/May/2024 10:36:39] "GET /video_feed1 HTTP/1.1" 200 -
+2024-05-07 10:40:48,990 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.2.4:5000
+2024-05-07 10:40:48,991 - INFO - [33mPress CTRL+C to quit[0m
+2024-05-07 10:40:48,991 - INFO -  * Restarting with stat
+2024-05-07 10:40:49,848 - WARNING -  * Debugger is active!
+2024-05-07 10:40:49,848 - INFO -  * Debugger PIN: 264-825-865
+2024-05-07 10:40:52,397 - INFO - 192.168.2.198 - - [07/May/2024 10:40:52] "GET / HTTP/1.1" 200 -
+2024-05-07 10:40:52,413 - INFO - 192.168.2.198 - - [07/May/2024 10:40:52] "[33mGET /video_feed HTTP/1.1[0m" 404 -
+2024-05-07 10:41:02,241 - INFO - 192.168.2.198 - - [07/May/2024 10:41:02] "GET /video_feed1 HTTP/1.1" 200 -
+2024-05-07 10:49:23,552 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.2.4:5000
+2024-05-07 10:49:23,552 - INFO - [33mPress CTRL+C to quit[0m
+2024-05-07 10:49:23,553 - INFO -  * Restarting with stat
+2024-05-07 10:49:24,417 - WARNING -  * Debugger is active!
+2024-05-07 10:49:24,417 - INFO -  * Debugger PIN: 264-825-865
+2024-05-07 10:49:27,826 - INFO - 192.168.2.198 - - [07/May/2024 10:49:27] "GET / HTTP/1.1" 200 -
+2024-05-07 10:49:27,842 - INFO - 192.168.2.198 - - [07/May/2024 10:49:27] "[33mGET /video_feed HTTP/1.1[0m" 404 -
+2024-05-07 10:49:37,713 - INFO - 192.168.2.198 - - [07/May/2024 10:49:37] "GET /video_feed1 HTTP/1.1" 200 -
+2024-05-07 11:00:47,672 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.2.4:5000
+2024-05-07 11:00:47,672 - INFO - [33mPress CTRL+C to quit[0m
+2024-05-07 11:00:47,672 - INFO -  * Restarting with stat
+2024-05-07 11:00:48,497 - WARNING -  * Debugger is active!
+2024-05-07 11:00:48,497 - INFO -  * Debugger PIN: 264-825-865
+2024-05-07 11:00:50,834 - INFO - 192.168.2.198 - - [07/May/2024 11:00:50] "GET / HTTP/1.1" 200 -
+2024-05-07 11:01:00,675 - INFO - 192.168.2.198 - - [07/May/2024 11:01:00] "GET /video_feed1 HTTP/1.1" 200 -
+2024-05-07 11:01:04,126 - INFO - 192.168.2.198 - - [07/May/2024 11:01:04] "GET /video_feed HTTP/1.1" 200 -
+2024-05-07 11:05:29,452 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.2.4:5000
+2024-05-07 11:05:29,452 - INFO - [33mPress CTRL+C to quit[0m
+2024-05-07 11:05:29,453 - INFO -  * Restarting with stat
+2024-05-07 11:05:30,306 - WARNING -  * Debugger is active!
+2024-05-07 11:05:30,307 - INFO -  * Debugger PIN: 264-825-865
+2024-05-07 11:05:33,366 - INFO - 192.168.2.198 - - [07/May/2024 11:05:33] "GET / HTTP/1.1" 200 -
+2024-05-07 11:05:36,933 - INFO - 192.168.2.198 - - [07/May/2024 11:05:36] "GET /video_feed HTTP/1.1" 200 -
+2024-05-07 11:05:47,695 - INFO - 192.168.2.198 - - [07/May/2024 11:05:47] "GET /video_feed1 HTTP/1.1" 200 -
+2024-05-07 11:08:21,399 - INFO -  * Detected change in '/workdir_test/0_hjl/git/linux-caffe/test/rtsp_test.py', reloading
+2024-05-07 11:10:27,488 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.2.4:5000
+2024-05-07 11:10:27,488 - INFO - [33mPress CTRL+C to quit[0m
+2024-05-07 11:10:27,488 - INFO -  * Restarting with stat
+2024-05-07 11:10:28,309 - WARNING -  * Debugger is active!
+2024-05-07 11:10:28,309 - INFO -  * Debugger PIN: 264-825-865
+2024-05-07 11:10:32,997 - INFO - 192.168.2.198 - - [07/May/2024 11:10:32] "GET / HTTP/1.1" 200 -
+2024-05-07 11:10:38,022 - INFO - 192.168.2.198 - - [07/May/2024 11:10:38] "GET /video_feed HTTP/1.1" 200 -
+2024-05-07 11:10:47,238 - INFO - 192.168.2.198 - - [07/May/2024 11:10:47] "GET /video_feed1 HTTP/1.1" 200 -
