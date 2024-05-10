@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>list of model</title>
+</head>
+<body>
+    <h2>choose one model</h2>
+    <form action="/process_selection" method="post">
+        <select name="model">
+            <option value="1001">pose</option>
+            <option value="1201">smokefire</option>
+            <option value="1101">helmet</option>
+        </select>
+        <br><br>
+        <input type="submit" value="提交">
+    </form>
+
+    <h2>Upload Image</h2>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="Upload">
+    </form>
+</body>
+</html>

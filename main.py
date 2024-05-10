@@ -1,24 +1,29 @@
-from src import model
-from src import data
+# from src import model
+# from src import data
+from src import Model
 import cv2
 import time
 
 if __name__ == '__main__':
-    model_id = 1301
-    device = 1
+    model_id = 1001
+    device = 0
     start_time = time.time()
-    net=model.load_model(model_id,device)
+    # net=model.load_model(model_id,device)
     #photo
-    img0 = cv2.imread('data/img-10002.jpg')
-    img1 = data.data_pre_process(img0)
-    output = model.predict(net, img1,task=1)
-    output = data.data_detect_process(output)
-    img2 = data.detect_paint(output,img0)
-    cv2.imwrite('data/detect.png', img2)
+    img0 = cv2.imread('data/fire001_01.png')
+    # img1 = data.data_pre_process(img0)
+    # output = model.predict(net, img1,task=1)
+    # output = data.data_detect_process(output)
+    # img2 = data.detect_paint(output,img0)
+    # cv2.imwrite('data/detect.png', img2)
+
     # output = data.data_post_process(output)
     # img2=data.data_paint(output,img0,on_original_img=False)
     # cv2.imwrite('data/result.png', img2)
     
+    caffe_model = Model(model_id, device)
+    output = caffe_model.predict(img0)
+    caffe_model.paint(img0,output)
     # #video
     # out_path = 'data/x_move.mp4'
     # cap = cv2.VideoCapture('data/move.mp4')

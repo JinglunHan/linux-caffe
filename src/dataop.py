@@ -32,7 +32,6 @@ def data_pre_process(img,task):
         img_tensor = cp.concatenate((img3, img2, img1), axis=1)
     img_tensor = img_tensor.astype('float32') / 255.0
     end_time = time.time()
-    
     global num 
     if num < 3:
         print('data pre process : ',end_time-start_time)
@@ -65,11 +64,11 @@ def data_post_process(tensor):
             l = nms_cupy(boxes,scores,iou_thres)
         if len(l) ==0:        
             # print(l.shape,l)
-            return 0
+            return [[[-1]]]
         # print('j[l]:',j[l].shape,j[l])
         else:
             output[i] = j[l]
-        # print(output)
+        print(output[0].shape)
     end_time = time.time()
     global num 
     if num < 3:
@@ -159,7 +158,7 @@ def data_paint(tensor,img,
                box_weight=2,
                pose_kind=0,
                line_color=(0,0,255),
-               line_weight=5,
+               line_weight=3,
                on_original_img=True):
     start_time = time.time()
     if device == 0:
@@ -250,9 +249,7 @@ def data_paint(tensor,img,
 ##### detect model result
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
-
 anchors = [10,13,16,30,33,23,30,61,62,45,59,119,116,90,156,198,373,326]
-
 def data_detect_process(tensor):
     nc = int(tensor[0].shape[1]/3-5)
     nw = nc+5
@@ -311,10 +308,11 @@ def data_detect_process(tensor):
     boxes = boxes[1:,:]
     scores = scores[1:,:]
     l = nms_numpy(boxes,scores,iou_thres)
+    print(l.shape,len(l),l)
     if len(l)==0:
-        return None
+        return [[-1]]
     output = output[l]
-
+    print(output.shape)
     
     return output
 

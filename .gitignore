@@ -2,3 +2,4 @@
 *.prototxt
 models/*.caffemodel
 models/*.prototxt
+results
