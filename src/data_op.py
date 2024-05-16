@@ -21,7 +21,7 @@ def data_pre_process(img,task):
         img_tensor = np.array([img])
     else:
         img_tensor = cp.array([img])
-    # print(img_tensor.shape)
+    print(img_tensor.shape)
     img_tensor = img_tensor.transpose((0, 3, 1, 2))
     img1 = img_tensor[:,0:1,:,:].copy()
     img2 = img_tensor[:,1:2,:,:].copy()
@@ -308,11 +308,11 @@ def data_detect_process(tensor):
     boxes = boxes[1:,:]
     scores = scores[1:,:]
     l = nms_numpy(boxes,scores,iou_thres)
-    print(l.shape,len(l),l)
+    # print(l.shape,len(l),l)
     if len(l)==0:
         return [[-1]]
     output = output[l]
-    print(output.shape)
+    # print(output.shape)
     
     return output
 

@@ -1,81 +1,172 @@
-
-from flask import Flask, render_template, Response
+from flask import Flask,render_template,request,redirect,Response
+import os
+from src import Model
+from src import Media
 import cv2
-# import sys
-# sys.path.append('/home/roota/workstation/onnx2caffe/linux-caffe')
-from src import model
-from src import data
-import cv2
-import base64
+import re
+import subprocess
+import threading
 import time
 
 app = Flask(__name__)
+current_path = os.path.abspath(__file__)
+parent_directory = os.path.dirname(current_path)
+ffmpeg_path = '/home/roota/workstation/opencv/ffmpeg/bin/'
+print(current_path,parent_directory)
+record_url=[]
 
-Rtsp_id = {
-    1:'rtsp://admin:admin12345@192.168.6.64:554/Streaming/Channels/103?transportmode=unicast&profile=Profile_3',
-    2:'rtsp://admin:admin12345@192.168.6.196:554/Streaming/Channels/102?transportmode=unicast&profile=Profile_2',
-    3:'rtsp://192.168.2.198:8554/micagent1',
-    4:'rtsp://admin:admin12345@192.168.2.224:554/mpeg4cif',
-    5:'rtsp://admin:admin12345@192.168.6.199:554/cam/realmonitor?channel=1&subtype=1&unicast=true&proto=Onvif',
-    6:'rtsp://192.168.2.198:8554/micagent2',
-    7:'rtsp://192.168.2.198:8554/micagent3'
-}
 
-def gen_frames(rtsp_id):
-    # 使用 OpenCV 捕获 RTSP 流
-    # cap = cv2.VideoCapture('rtsp://192.168.2.198:8554/micagent1')
-    cap = cv2.VideoCapture(Rtsp_id[rtsp_id])
-    # cap = cv2.VideoCapture('data/move.mp4')
-    model_id = 1001
-    device = 1
-    net=model.load_model(model_id,device)
-    
-    frame_gap = 5
-    frame_count = 0
-    
-    while cap.isOpened():
-        ret, frame = cap.read()
-        frame_count += 1
-        if frame_count == frame_gap:
-            img = data.data_pre_process(frame)
-            # if len(img) == 1:
-            #     print(len(img))
-            #     continue
-            output = model.predict(net, img)
-            output = data.data_post_process(output)
-            if output !=0:
-                frame = data.data_paint(output, frame,pose_kind=1)
-
-            if not ret:
-                break
-            else:
-                # 将捕获到的帧编码为 JPEG 格式
-                ret, buffer = cv2.imencode('.jpg', frame)
-                
-                if not ret:
-                    break
-
-                # 将帧作为流传输到网页
-                yield (b'--frame\r\n'
-                    b'Content-Type: image/jpeg\r\n\r\n' + buffer.tobytes() + b'\r\n')
-            frame_count = 0
-
-    cap.release()
-
-@app.route('/')
+# 渲染 HTML 模板
+@app.route('/',methods=['POST','GET'])
 def index():
-    # 返回网页模板，包含视频播放区域
+    if request.method == 'GET':
+        return render_template('index.html')
+    if 'task_choose' in request.form:
+        task = request.form['task']
+        if task == '0':
+            return redirect('/media')
+        elif task == '1':
+            return redirect('/video')
+        elif task == '2':
+            return redirect('/rtsp')
     return render_template('index.html')
 
-@app.route('/video_feed')
-def video_feed():
-    # 返回生成的帧流
-    return Response(gen_frames(rtsp_id=1), mimetype='multipart/x-mixed-replace; boundary=frame')
+@app.route('/rtsp', methods=['POST','GET'])
+def index_rtsp():
+    if request.method == 'GET':
+        return render_template('rtsp.html')
+    if 'task_choose' in request.form:
+        task = request.form['task']
+        if task == '0':
+            return redirect('/media')
+        elif task == '1':
+            return redirect('/video')
+        elif task == '2':
+            return redirect('/rtsp')
+    if 'url_submit' in request.form:
+        rtsp_url = request.form['rtsp_url']
+        rtsp = Media(rtsp_url,1)
+        if len(record_url)==0:
+            record_url.append(rtsp_url)
+        else:
+            record_url[0]= rtsp_url
+        # 检查 RTSP URL 是否有效
+        # pattern = re.compile(r'rtsp://([^:]+):([^@]+)@([^:/]+)')
+        # match = pattern.match(rtsp_url)
+        # if not match:
+        #     return render_template('rtsp.html', url_valid ='Invalid RTSP URL')
+        if rtsp.media.isOpened():
+            # # rtsp.write_video(ip_address='192.168.2.98')
+            # write_thread = threading.Thread(target=rtsp.write_video, args=('192.168.2.98',))
+            # write_thread.start()
+            # time.sleep(1)
+            return render_template('rtsp.html', rtsp_valid = True)
+        else:
+            return render_template('rtsp.html', url_valid ='Invalid RTSP URL')  
+            
+    return render_template('rtsp.html')
 
-@app.route('/video_feed1')
-def video_feed1():
-    # 返回生成的帧流
-    return Response(gen_frames(rtsp_id=2), mimetype='multipart/x-mixed-replace; boundary=frame')
+def gen(rtsp_url):
+    rtsp = Media(rtsp_url,1)    
+    while rtsp.media.isOpened():
+        ret, frame = rtsp.media.read()
+        if ret:
+            ret, buffer = cv2.imencode('.jpg', frame)
+        if not ret:
+            break
+        # 将帧作为流传输到网页
+        yield (b'--frame\r\n'
+                b'Content-Type: image/jpeg\r\n\r\n' + buffer.tobytes() + b'\r\n')
+
+@app.route('/rtsp_show', methods=['POST','GET'])
+def rtsp_show():
+    rtsp_url = record_url[0]
+    return Response(gen(rtsp_url), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+
+@app.route('/media', methods=['POST','GET'])
+def index_media():
+    if request.method == 'GET':
+        return render_template('media.html', uploaded_image=None, processed_image=None)
+    if 'task_choose' in request.form:
+        task = request.form['task']
+        if task == '0':
+            return redirect('/media')
+        elif task == '1':
+            return redirect('/video')
+        elif task == '2':
+            return redirect('/rtsp')
+    file = request.files['file']
+    if file.filename == '':
+        return render_template('media.html', uploaded_image=None, processed_image=None)
+    # Save uploaded image
+    save_path = os.path.join(parent_directory+'/static/upload-img/', file.filename)
+    os.makedirs(os.path.dirname(save_path), exist_ok=True)
+    file.save(save_path)
+    model_id = int(request.form['model'])
+    device = int(request.form['device'])
+    model = Model(model_id,device)
+    print(save_path)
+    img0 = Media(save_path,0)
+    tensor = model.predict(img0.media)
+    path=model.paint(img0.media,tensor)
+
+    uploaded_image_url = os.path.relpath(save_path, parent_directory)
+    processed_image_url = os.path.relpath(path, parent_directory)
+    
+    return render_template('media.html', uploaded_image=uploaded_image_url, processed_image=processed_image_url)
+
+
+@app.route('/video', methods=['POST','GET'])
+def index_video():
+    if request.method == 'GET':
+        return render_template('video.html', uploaded_video=None, processed_video=None)
+    if 'task_choose' in request.form:
+        task = request.form['task']
+        if task == '0':
+            return redirect('/media')
+        elif task == '1':
+            return redirect('/video')
+        elif task == '2':
+            return redirect('/rtsp')
+    file = request.files['file']
+    if file.filename == '':
+        return render_template('video.html', uploaded_video=None, processed_video=None)
+    # Save uploaded video
+    save_path = os.path.join(parent_directory+'/static/upload-video/', file.filename)
+    os.makedirs(os.path.dirname(save_path), exist_ok=True)
+    file.save(save_path)
+    uploaded_video_url = os.path.relpath(save_path, parent_directory)
+
+    video0 = Media(save_path,1)
+    model_id = int(request.form['model'])
+    device = int(request.form['device'])
+    model = Model(model_id,device)
+    cap = video0.media
+    codec = cv2.VideoWriter_fourcc(*'avc1')
+    video_path = os.path.join(parent_directory+'/static/results_video/', 'processed_'+file.filename)
+    result_path = os.path.join(parent_directory+'/static/results_video/', 'result_'+file.filename)
+    os.makedirs(os.path.dirname(video_path), exist_ok=True)
+    # out = cv2.VideoWriter(video_path, codec, 20.0, (video0.width, video0.height))
+    # while(cap.isOpened()):
+    #     ret, frame = cap.read()
+    #     if ret == True:
+    #         tensor = model.predict(frame)
+    #         frame = model.paint(frame,tensor,save_image=False)
+    #         out.write(frame)
+    #     else:
+    #         break
+    
+    # 定义FFmpeg命令
+    ffmpeg_command = '{}ffmpeg -i {} -c:v libx264 -c:a aac -strict -2 -y {}'.format(ffmpeg_path, video_path, result_path)
+
+    # 执行FFmpeg命令
+    process = subprocess.Popen(ffmpeg_command, shell=True)
+    process.wait()  # 等待命令执行完成
+
+    # 继续执行下面的代码
+    processed_video_url = os.path.relpath(result_path, parent_directory)
+    return render_template('video.html', uploaded_video=uploaded_video_url, processed_video=processed_video_url)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000,debug=True)
+    app.run(debug=True)

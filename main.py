@@ -1,6 +1,7 @@
 # from src import model
 # from src import data
 from src import Model
+from src import Media
 import cv2
 import time
 
@@ -8,9 +9,13 @@ if __name__ == '__main__':
     model_id = 1001
     device = 0
     start_time = time.time()
+    url = 'rtsp://admin:admin12345@192.168.6.64:554/Streaming/Channels/103?transportmode=unicast&profile=Profile_3'
+    url1 = 'rtsp://192.168.2.198:8554/micagent1'
     # net=model.load_model(model_id,device)
     #photo
     img0 = cv2.imread('data/fire001_01.png')
+    cap=Media(url1,1)
+    cap.write_video()
     # img1 = data.data_pre_process(img0)
     # output = model.predict(net, img1,task=1)
     # output = data.data_detect_process(output)
@@ -21,9 +26,10 @@ if __name__ == '__main__':
     # img2=data.data_paint(output,img0,on_original_img=False)
     # cv2.imwrite('data/result.png', img2)
     
-    caffe_model = Model(model_id, device)
-    output = caffe_model.predict(img0)
-    caffe_model.paint(img0,output)
+    # caffe_model = Model(model_id, device)
+    # output = caffe_model.predict(img0)
+    # caffe_model.paint(img0,output)
+
     # #video
     # out_path = 'data/x_move.mp4'
     # cap = cv2.VideoCapture('data/move.mp4')

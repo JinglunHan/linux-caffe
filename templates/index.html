@@ -4,16 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RTSP Stream</title>
+    <title>Model Detect</title>
 </head>
 <body>
-    <h1>RTSP Stream</h1>
-    <video id="video_feed" autoplay controls>
-        <source src="/home/roota/workstation/onnx2caffe/linux-caffe/data/move.mp4" type="video/mp4">
-    </video>
-    <script>
-        
-    </script>
-    <!-- <img src="/video_feed"> -->
+    <form action="/" method="post" enctype="multipart/form-data">
+        <!-- <select name="model">
+            <option value='1001'>pose</option>
+            <option value='1201'>smokefire</option>
+            <option value='1101'>helmet</option>
+        </select>
+        <select name="device">
+            <option value='0'>cpu</option>
+            <option value='1'>gpu</option>
+        </select>{{model_load}} -->
+
+    <h2>Task</h2>
+    <select name="task">
+        <option value='0'>upload image</option>
+        <option value='1'>upload video</option>
+        <option value='2'>rtsp</option>
+    </select>
+    <input type="submit" name="task_choose" value="Upload">
+    </form>
+    
+
 </body>
 </html>

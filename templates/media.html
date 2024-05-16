@@ -1,0 +1,56 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midea</title>
+</head>
+<style>
+    .container {
+        display: flex;
+        justify-content: space-around; /* 或者使用其他的 justify-content 属性来调整图片之间的间距 */
+    }
+
+    .image1, .image2 {
+        width: 50%; /* 这里的百分比可以根据你的需要来调整 */
+        max-width: 480px; /* 设置图片的最大宽度，避免在较大屏幕上图片过大 */
+        height: auto; /* 让浏览器根据宽度自动调整高度，以保持图片比例 */
+    }
+</style>
+<body>
+    <form action="/media" method="post" enctype="multipart/form-data">
+        <h2>Task</h2>
+        <select name="task">
+            <option value='0'>upload image</option>
+            <option value='1'>upload video</option>
+            <option value='2'>rtsp</option>
+        </select>
+        <input type="submit" name="task_choose" value="Upload">
+        <h2>choose one model</h2>
+        <select name="model">
+            <option value=1001>pose</option>
+            <option value=1101>smokefire</option>
+            <option value=1201>helmet</option>
+            <option value=1301>beltsprinklingcoal</option>
+        </select>
+        <select name="device">
+            <option value=0>cpu</option>
+            <option value=1>gpu</option>
+        </select>{{model_load}}
+        <br>
+        <h2>Upload</h2>
+        <input type="file" name="file" accept="image/*">
+        <input type="submit" value="Upload">
+    </form>
+        <br><br>
+        <div class="container">
+        {% if uploaded_image %}
+        <img src="{{ uploaded_image }}" alt="Uploaded Image" class="image1">
+        {% endif %}
+        {% if processed_image %}
+        <img src="{{ processed_image }}" alt="Processed Image" class="image2">
+        {% endif %}
+        </div>
+</body>
+</html>

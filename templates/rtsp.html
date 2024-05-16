@@ -1,0 +1,50 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Detect</title>
+</head>
+<body>
+    <form action="/rtsp" method="post" enctype="multipart/form-data">
+            <!-- <select name="model">
+                <option value='1001'>pose</option>
+                <option value='1201'>smokefire</option>
+                <option value='1101'>helmet</option>
+            </select>
+            <select name="device">
+                <option value='0'>cpu</option>
+                <option value='1'>gpu</option>
+            </select>{{model_load}} -->
+
+            <h2>Task</h2>
+            <select name="task">
+                <option value='0'>upload image</option>
+                <option value='1'>upload video</option>
+                <option value='2'>rtsp</option>
+            </select>
+            <input type="submit" name="task_choose" value="Upload"><br>
+            <h2>RTSP</h2>
+            <label for="input_text">RTSP URL:</label>
+            <input type="text" name="rtsp_url">
+            <input type="submit" name="url_submit" value="Submit">{{url_valid}}
+            <br><br>
+    </form>
+    {% if rtsp_valid %}
+    <img src="/rtsp_show" alt="Image 1" class="image1">
+    {% endif %}
+</body>
+<style> 
+    .container {
+        display: flex;
+        justify-content: space-around; /* 或者使用其他的 justify-content 属性来调整图片之间的间距 */
+    }
+
+    .image1 {
+        width: 50%; /* 这里的百分比可以根据你的需要来调整 */
+        max-width: 480px; /* 设置图片的最大宽度，避免在较大屏幕上图片过大 */
+        height: auto; /* 让浏览器根据宽度自动调整高度，以保持图片比例 */
+    }
+</style>
+</html>

@@ -3,9 +3,12 @@ import numpy as np
 import os
 import logging
 import time
+current_path = os.path.abspath(__file__)
+parent_directory = os.path.dirname(current_path)
+abs_path = os.path.dirname(parent_directory)
 import sys
-sys.path.append('/home/roota/workstation/onnx2caffe/linux-caffe/src')
-import dataop as dop
+sys.path.append(abs_path + '/src/')
+import src.data_op as dop
 
 # logging.basicConfig(filename='error.log', level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -20,9 +23,7 @@ MODEL_ID ={
     1301:'beltsprinklingcoal'
 }
 
-current_path = os.path.abspath(__file__)
-parent_directory = os.path.dirname(current_path)
-abs_path = os.path.dirname(parent_directory)
+
 class Model():
     def __init__(self, model_id,device):
         self.id = model_id
@@ -60,7 +61,7 @@ class Model():
               line_weight=3,
               on_original_img=True,
               save_image=True,
-              save_path=abs_path+'/results/'):
+              save_path=abs_path+'/static/results/'):
         if self.task == 0:
             tensor = dop.data_detect_process(tensor)
             if tensor[0][0] != -1:
@@ -83,7 +84,10 @@ class Model():
             target_dir = save_path+name
             if not os.path.exists(target_dir):
                 os.makedirs(target_dir)
-            cv2.imwrite(target_dir+'/'+str(time)+'.png', img)
+            path = target_dir+'/'+str(time)+'.png'
+            cv2.imwrite(path,img)   
+            return  path
+        return img
 
             
 

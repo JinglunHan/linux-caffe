@@ -54,7 +54,7 @@ def video_feed():
 
 @app.route('/video_feed1')
 def video_feed1():
-    return Response(gen_frames(ai=True), mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(gen_frames(ai=False), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000,debug=True)

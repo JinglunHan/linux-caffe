@@ -3,3 +3,5 @@
 models/*.caffemodel
 models/*.prototxt
 results
+record
+static

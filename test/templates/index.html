@@ -1,26 +1,29 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>list of model</title>
+    <title>Model Detect</title>
 </head>
 <body>
     <h2>choose one model</h2>
     <form action="/upload" method="post" enctype="multipart/form-data">
         <select name="model">
-            <option value=1001>pose</option>
-            <option value=1201>smokefire</option>
-            <option value=1101>helmet</option>
+            <option value="1001">pose</option>
+            <option value="1201">smokefire</option>
+            <option value="1101">helmet</option>
         </select>{{model_load}}
-    <h2>choose detect device</h2> 
-    <select name="device">
-        <option value=0>cpu</option>
-        <option value=1>gpu</option>
-    </select>
     <h2>Upload Image</h2>
         <input type="file" name="file">
         <input type="submit" value="Upload">{{file_upload}}
     </form>
+    <!-- <h1>RTSP Stream</h1>
+    <video id="video_feed" autoplay controls>
+        <source src="/home/roota/workstation/onnx2caffe/linux-caffe/data/move.mp4" type="video/mp4">
+    </video>
+    <script> 
+    </script> -->
+    <!-- <img src="/video_feed"> -->
 </body>
 </html>
