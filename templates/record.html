@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Server Files</title>
+</head>
+<body>
+    <form action="/record" method="post" enctype="multipart/form-data">
+        {% include 'task.html' %}
+    </form>
+    <h2>Server Files</h2>
+    <ul>
+        {% for file in files %}
+            <li>{{ file }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

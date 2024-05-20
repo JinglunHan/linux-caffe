@@ -7,14 +7,28 @@ import re
 import subprocess
 import threading
 import time
+from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
+socketio = SocketIO(app)
+app.config['SECRET_KEY'] = 'secret!'
 current_path = os.path.abspath(__file__)
 parent_directory = os.path.dirname(current_path)
 ffmpeg_path = '/home/roota/workstation/opencv/ffmpeg/bin/'
 print(current_path,parent_directory)
-record_url=[]
+record_url=[1,1,1,1,1,1,1,1,1,1,1]
+detect_img_url=[]
+reload_model = False
 
+def task_choose(task):
+    if task == '0':
+        return '/media'
+    elif task == '1':
+        return '/video'
+    elif task == '2':
+        return '/rtsp'
+    elif task == '3':
+        return '/record'
 
 # 渲染 HTML 模板
 @app.route('/',methods=['POST','GET'])
@@ -23,12 +37,9 @@ def index():
         return render_template('index.html')
     if 'task_choose' in request.form:
         task = request.form['task']
-        if task == '0':
-            return redirect('/media')
-        elif task == '1':
-            return redirect('/video')
-        elif task == '2':
-            return redirect('/rtsp')
+        target = task_choose(task)
+        return redirect(target)
+    
     return render_template('index.html')
 
 @app.route('/rtsp', methods=['POST','GET'])
@@ -37,19 +48,16 @@ def index_rtsp():
         return render_template('rtsp.html')
     if 'task_choose' in request.form:
         task = request.form['task']
-        if task == '0':
-            return redirect('/media')
-        elif task == '1':
-            return redirect('/video')
-        elif task == '2':
-            return redirect('/rtsp')
+        target = task_choose(task)
+        return redirect(target)
     if 'url_submit' in request.form:
         rtsp_url = request.form['rtsp_url']
         rtsp = Media(rtsp_url,1)
-        if len(record_url)==0:
-            record_url.append(rtsp_url)
-        else:
-            record_url[0]= rtsp_url
+        channel = int(request.form['channel'])
+        # if len(record_url)==0:
+        #     record_url.append(rtsp_url)
+        # else:
+        record_url[channel]= rtsp_url
         # 检查 RTSP URL 是否有效
         # pattern = re.compile(r'rtsp://([^:]+):([^@]+)@([^:/]+)')
         # match = pattern.match(rtsp_url)
@@ -66,7 +74,7 @@ def index_rtsp():
             
     return render_template('rtsp.html')
 
-def gen(rtsp_url):
+def gen(rtsp_url,detect=False):
     rtsp = Media(rtsp_url,1)    
     while rtsp.media.isOpened():
         ret, frame = rtsp.media.read()
@@ -78,11 +86,57 @@ def gen(rtsp_url):
         yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + buffer.tobytes() + b'\r\n')
 
-@app.route('/rtsp_show', methods=['POST','GET'])
-def rtsp_show():
-    rtsp_url = record_url[0]
-    return Response(gen(rtsp_url), mimetype='multipart/x-mixed-replace; boundary=frame')
+@app.route('/rtsp_show/<int:channel>', methods=['POST','GET'])
+def rtsp_show(channel):
+    rtsp_url = record_url[channel]
+    return Response(gen(rtsp_url,detect=False), mimetype='multipart/x-mixed-replace; boundary=frame')
 
+@app.route('/rtsp_detect', methods=['POST','GET'])
+def rtsp_detect():
+    rtsp_url = record_url[0]
+    if 'model_choose' in request.form:
+        print('------------------ rtsp detect -------------------------')
+        reload_model = True
+        model_id = int(request.form['model'])
+        device = int(request.form['device'])
+        detect_thread = threading.Thread(target=rtsp_detect_thread, args=(model_id,device,rtsp_url))
+        reload_model = False
+        detect_thread.start()
+    return render_template('rtsp.html', rtsp_valid = True,detect_rtsp=True)
+def rtsp_detect_thread(model_id,device,rtsp_url):
+    model = Model(model_id,device)
+    rtsp = Media(rtsp_url,1) 
+    step = 5
+    count = 0   
+    while rtsp.media.isOpened() and reload_model ==False:
+        ret, frame = rtsp.media.read()
+        count += 1
+        if ret and count==step:
+            count = 0
+            tensor=model.predict(frame)
+            path = model.paint(frame,tensor,save_image=True)
+            if path != None:
+                # print(path)
+                path =  os.path.relpath(path, parent_directory)
+                # print(path)
+                if len(detect_img_url)==0:
+                    detect_img_url.append(path)
+                else:
+                    detect_img_url[0] = path
+
+@socketio.on('connect')
+def handle_connect():
+    print('Client connected')
+    socketio.start_background_task(send_result)
+def send_result():
+    url = detect_img_url
+    while True:
+        if len(url)>0:
+            socketio.emit('detect_img', url[0])
+        time.sleep(1)
+        # url = detect_img_url
+
+    # socketio.start_background_task()
 
 @app.route('/media', methods=['POST','GET'])
 def index_media():
@@ -90,12 +144,8 @@ def index_media():
         return render_template('media.html', uploaded_image=None, processed_image=None)
     if 'task_choose' in request.form:
         task = request.form['task']
-        if task == '0':
-            return redirect('/media')
-        elif task == '1':
-            return redirect('/video')
-        elif task == '2':
-            return redirect('/rtsp')
+        target = task_choose(task)
+        return redirect(target)
     file = request.files['file']
     if file.filename == '':
         return render_template('media.html', uploaded_image=None, processed_image=None)
@@ -123,12 +173,8 @@ def index_video():
         return render_template('video.html', uploaded_video=None, processed_video=None)
     if 'task_choose' in request.form:
         task = request.form['task']
-        if task == '0':
-            return redirect('/media')
-        elif task == '1':
-            return redirect('/video')
-        elif task == '2':
-            return redirect('/rtsp')
+        target = task_choose(task)
+        return redirect(target)
     file = request.files['file']
     if file.filename == '':
         return render_template('video.html', uploaded_video=None, processed_video=None)
@@ -168,5 +214,18 @@ def index_video():
     processed_video_url = os.path.relpath(result_path, parent_directory)
     return render_template('video.html', uploaded_video=uploaded_video_url, processed_video=processed_video_url)
 
+@app.route('/record', methods=['POST','GET'])
+def index_record():
+    if request.method == 'GET':
+        return render_template('record.html')
+    if 'task_choose' in request.form:
+        task = request.form['task']
+        target = task_choose(task)
+        return redirect(target)
+    files = os.listdir(parent_directory+'/record/')
+    print(files) 
+    return render_template('record.html',files=files)
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    # app.run(debug=True)
+    socketio.run(app,debug=True)

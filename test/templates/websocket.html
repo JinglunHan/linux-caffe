@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-time Time Update</title>
+</head>
+<body>
+    <p id="time">Loading...</p>
+    <img id="image_display" src="" alt="Image" width="320"><br>
+    <img id="image1" src ="{{ url_for('static', filename='upload-img/img-10002.jpg') }}" width="320">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.1/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        socket.on('connect', function() {
+            console.log('Connected to WebSocket server');
+        });
+
+        socket.on('update_time', function(current_time) {
+            document.getElementById('time').textContent = current_time;
+        });
+        socket.on('image', function(image_data) {
+            document.getElementById('image_display').src = image_data;
+        });
+    </script>
+    <br><br>
+    <div id="domain"></div>
+    <div id="port"></div>
+    <script>
+        // 获取当前页面的域名和端口
+        var currentDomain = document.domain;
+        var currentPort = location.port;
+
+        // 将域名和端口信息插入到页面中
+        document.getElementById("domain").innerText = "Domain: " + currentDomain;
+        document.getElementById("port").innerText = "Port: " + currentPort;
+    </script>
+
+</body>
+</html>

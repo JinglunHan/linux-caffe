@@ -21,7 +21,7 @@ def data_pre_process(img,task):
         img_tensor = np.array([img])
     else:
         img_tensor = cp.array([img])
-    print(img_tensor.shape)
+    # print(img_tensor.shape)
     img_tensor = img_tensor.transpose((0, 3, 1, 2))
     img1 = img_tensor[:,0:1,:,:].copy()
     img2 = img_tensor[:,1:2,:,:].copy()
@@ -32,9 +32,9 @@ def data_pre_process(img,task):
         img_tensor = cp.concatenate((img3, img2, img1), axis=1)
     img_tensor = img_tensor.astype('float32') / 255.0
     end_time = time.time()
-    global num 
-    if num < 3:
-        print('data pre process : ',end_time-start_time)
+    # global num 
+    # if num < 3:
+    #     print('data pre process : ',end_time-start_time)
     return img_tensor
 
 ### pose model result
@@ -70,9 +70,9 @@ def data_post_process(tensor):
             output[i] = j[l]
         print(output[0].shape)
     end_time = time.time()
-    global num 
-    if num < 3:
-        print('data post process : ',end_time-start_time)
+    # global num 
+    # if num < 3:
+    #     print('data post process : ',end_time-start_time)
     return output
 
 

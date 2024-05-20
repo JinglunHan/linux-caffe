@@ -84,7 +84,7 @@ class Model():
             target_dir = save_path+name
             if not os.path.exists(target_dir):
                 os.makedirs(target_dir)
-            path = target_dir+'/'+str(time)+'.png'
+            path = target_dir+'/'+str(time)+'.jpg'
             cv2.imwrite(path,img)   
             return  path
         return img

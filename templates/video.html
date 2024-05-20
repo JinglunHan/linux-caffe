@@ -20,25 +20,9 @@
 </style>
 <body>
     <form action="/video" method="post" enctype="multipart/form-data">
-        <h2>Task</h2>
-        <select name="task">
-            <option value='0'>upload image</option>
-            <option value='1'>upload video</option>
-            <option value='2'>rtsp</option>
-        </select>
-        <input type="submit" name="task_choose" value="Upload">
-        <h2>choose one model</h2>
-        <select name="model">
-            <option value=1001>pose</option>
-            <option value=1101>smokefire</option>
-            <option value=1201>helmet</option>
-            <option value=1301>beltsprinklingcoal</option>
-        </select>
-        <select name="device">
-            <option value=0>cpu</option>
-            <option value=1>gpu</option>
-        </select>{{model_load}}
-        <h2>Upload</h2>
+        {% include 'task.html' %}
+        {% include 'model.html' %}
+        <h2>Video</h2>
         <input type="file" name="file" accept="video/*">
         <input type="submit" value="Upload">
     </form>
