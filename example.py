@@ -216,15 +216,29 @@ def index_video():
 
 @app.route('/record', methods=['POST','GET'])
 def index_record():
+    directory = get_directory_structure(parent_directory+'/static/record')
+    # print(directory)
     if request.method == 'GET':
-        return render_template('record.html')
+        return render_template('record.html', directory=directory)
     if 'task_choose' in request.form:
         task = request.form['task']
         target = task_choose(task)
         return redirect(target)
-    files = os.listdir(parent_directory+'/record/')
-    print(files) 
-    return render_template('record.html',files=files)
+    if 'url_submit' in request.form:
+        path = request.form['record_file_url']
+        path = 'static/record/'+path
+        print(path)
+        return render_template('record.html', directory=directory, record_video=path)
+
+def get_directory_structure(rootdir):
+    """
+    获取目录结构的函数
+    """
+    directory_structure = {}
+    for root, dirs, files in os.walk(rootdir):
+        for dir in dirs:
+            directory_structure[dir] = os.listdir(os.path.join(root, dir))
+    return directory_structure
 
 if __name__ == '__main__':
     # app.run(debug=True)

@@ -1,17 +1,93 @@
+<!-- index.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Server Files</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Detect</title>
 </head>
 <body>
     <form action="/record" method="post" enctype="multipart/form-data">
-        {% include 'task.html' %}
+    {% include 'task.html' %}
+    <h3>Record file</h3>
+    <input id="fileInput" type="text" name="record_file_url">
+    <input type="submit" name="url_submit" value="Submit">
     </form>
-    <h2>Server Files</h2>
+    <h2>Record List</h2>
     <ul>
-        {% for file in files %}
-            <li>{{ file }}</li>
+        {% for folder, files in directory.items() %}
+        <li class="folder">{{ folder }}
+            <ul class="file" data-folder="{{ folder }}">
+                {% for file in files %}
+                <li class="file1" data-file="{{ file }}">{{ file }}</li>
+                {% endfor %}
+            </ul>
+        </li>
         {% endfor %}
     </ul>
+    {% if record_video %}
+    <div class="container">
+            <video controls class="video">
+            <source src="{{ record_video }}" type="video/mp4">
+            Your browser does not support the video tag.
+            </video>
+    </div>
+    {% endif %}
 </body>
+<style>
+    /* 样式可根据需要进行调整 */
+    .folder {
+        cursor: pointer;
+        list-style-type: none;
+    }
+    .folder:hover {
+        color: blue; /* 鼠标悬停时改变颜色 */
+    }
+    .file {
+        display: none; /* 默认隐藏文件 */
+        margin-left: 20px; /* 文件与文件夹之间的缩进 */
+    }
+    .container {
+        display: flex;
+        justify-content: space-around; /* 或者使用其他的 justify-content 属性来调整图片之间的间距 */
+    }
+
+    .video {
+        width: 50%; /* 这里的百分比可以根据你的需要来调整 */
+        max-width: 480px; /* 设置图片的最大宽度，避免在较大屏幕上图片过大 */
+        height: auto; /* 让浏览器根据宽度自动调整高度，以保持图片比例 */
+    }
+</style>
+
+<script>
+    var folders = document.querySelectorAll('.folder');
+
+    // 遍历文件夹元素并添加点击事件处理程序
+    folders.forEach(function(folder) {
+        folder.addEventListener('click', function() {
+            // 切换文件列表的显示/隐藏状态
+            var files = this.querySelector('ul');
+            if (files.style.display === 'none') {
+                files.style.display = 'block';
+            } else {
+                files.style.display = 'none';
+            }
+        });
+    });
+    // 获取所有文件元素
+    var files = document.querySelectorAll('.file1');
+
+    // 遍历文件元素并添加点击事件处理程序
+    files.forEach(function(file) {
+        file.addEventListener('click', function() {
+            // 获取文件名
+            var fileName = this.textContent.trim();
+            
+            // 将文件名设置为 input 表单的值
+            var folderName = this.parentNode.getAttribute('data-folder');
+            document.getElementById('fileInput').value = folderName+'/'+fileName;
+            // document.getElementById('fileInput').value = fileName
+        });
+    });
+</script>
 </html>
