@@ -12,6 +12,8 @@ app = Flask(__name__)
 def gen_frames(ai=True):
     # 使用 OpenCV 捕获 RTSP 流
     cap = cv2.VideoCapture('rtsp://192.168.2.198:8554/micagent1')
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    print(fps)
     if ai == True:
         model_id = 1001
         device = 0

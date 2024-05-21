@@ -89,14 +89,18 @@ def gen(rtsp_url,detect=False):
 @app.route('/rtsp_show/<int:channel>', methods=['POST','GET'])
 def rtsp_show(channel):
     rtsp_url = record_url[channel]
-    return Response(gen(rtsp_url,detect=False), mimetype='multipart/x-mixed-replace; boundary=frame')
+    if rtsp_url != 1:
+        return Response(gen(rtsp_url,detect=False), mimetype='multipart/x-mixed-replace; boundary=frame')
+    else:
+        pass
 
 @app.route('/rtsp_detect', methods=['POST','GET'])
 def rtsp_detect():
-    rtsp_url = record_url[0]
+    rtsp_url = record_url[1]
     if 'model_choose' in request.form:
         print('------------------ rtsp detect -------------------------')
         reload_model = True
+        time.sleep(1)
         model_id = int(request.form['model'])
         device = int(request.form['device'])
         detect_thread = threading.Thread(target=rtsp_detect_thread, args=(model_id,device,rtsp_url))
@@ -108,7 +112,9 @@ def rtsp_detect_thread(model_id,device,rtsp_url):
     rtsp = Media(rtsp_url,1) 
     step = 5
     count = 0   
-    while rtsp.media.isOpened() and reload_model ==False:
+    while rtsp.media.isOpened() :
+        if reload_model:
+            break
         ret, frame = rtsp.media.read()
         count += 1
         if ret and count==step:

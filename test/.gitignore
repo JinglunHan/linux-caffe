@@ -1,0 +1,9 @@
+*.caffemodel
+*.prototxt
+*.log
+models/*.caffemodel
+models/*.prototxt
+results
+record
+static
+test_data
