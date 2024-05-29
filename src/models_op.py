@@ -53,7 +53,7 @@ class Model():
             logging.info("Model prediction in {} seconds".format(end-start))
             return [output1,output2,output3]
     
-    def paint(self,img,tensor,
+    def paint(self,img,tensor, 
               box_line=3,
               paint_box=True,
               pose_kind=0,

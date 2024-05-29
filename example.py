@@ -1,3 +1,4 @@
+import multiprocessing.managers
 from flask import Flask,render_template,request,redirect,Response
 import os
 from src import Model
@@ -96,6 +97,9 @@ def rtsp_show(channel):
     else:
         pass
 
+import multiprocessing
+process_url = multiprocessing.Manager().list()
+
 @app.route('/rtsp_detect', methods=['POST','GET'])
 def rtsp_detect():
     rtsp_url = record_url[1]
@@ -105,9 +109,11 @@ def rtsp_detect():
         time.sleep(1)
         model_id = int(request.form['model'])
         device = int(request.form['device'])
-        detect_thread = threading.Thread(target=rtsp_detect_thread, args=(model_id,device,rtsp_url))
-        reload_model = False
-        detect_thread.start()
+        detect_process = multiprocessing.Process(target=rtsp_detect_thread, args=(model_id,device,rtsp_url))
+        detect_process.start()
+        # detect_thread = threading.Thread(target=rtsp_detect_thread, args=(model_id,device,rtsp_url))
+        # reload_model = False
+        # detect_thread.start()
     return render_template('rtsp.html', rtsp_valid = True,detect_rtsp=True)
 def rtsp_detect_thread(model_id,device,rtsp_url):
     model = Model(model_id,device)
@@ -127,17 +133,22 @@ def rtsp_detect_thread(model_id,device,rtsp_url):
                 # print(path)
                 path =  os.path.relpath(path, parent_directory)
                 # print(path)
-                if len(detect_img_url)==0:
-                    detect_img_url.append(path)
+                # if len(detect_img_url)==0:
+                #     detect_img_url.append(path)
+                # else:
+                #     detect_img_url[0] = path
+                if len(process_url)==0:
+                    process_url.append(path)
                 else:
-                    detect_img_url[0] = path
+                    process_url[0] = path
 
 @socketio.on('connect')
 def handle_connect():
     print('Client connected')
     socketio.start_background_task(send_result)
 def send_result():
-    url = detect_img_url
+    # url = detect_img_url
+    url = process_url
     while True:
         if len(url)>0:
             socketio.emit('detect_img', url[0])

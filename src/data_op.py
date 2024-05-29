@@ -242,7 +242,7 @@ def data_paint(tensor,img,
     # if num < 3:
     #     print('paint : ',end_time-start_time)
     #     num = num + 1
-    print('paint : ',end_time-start_time)
+    # print('paint : ',end_time-start_time)
     return img
 
 
