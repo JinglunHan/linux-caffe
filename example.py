@@ -10,7 +10,7 @@ import time
 from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
-socketio = SocketIO(app)
+socketio = SocketIO(app,threaded=False)
 app.config['SECRET_KEY'] = 'secret!'
 current_path = os.path.abspath(__file__)
 parent_directory = os.path.dirname(current_path)
@@ -30,7 +30,7 @@ def task_choose(task):
     elif task == '3':
         return '/record'
 
-# 渲染 HTML 模板
+# -------------------- index ----------------------------------#
 @app.route('/',methods=['POST','GET'])
 def index():
     if request.method == 'GET':
@@ -42,6 +42,8 @@ def index():
     
     return render_template('index.html')
 
+
+#------------------------ rtsp --------------------------------#
 @app.route('/rtsp', methods=['POST','GET'])
 def index_rtsp():
     if request.method == 'GET':
@@ -144,6 +146,8 @@ def send_result():
 
     # socketio.start_background_task()
 
+
+#-------------------- media html ------------------------------#
 @app.route('/media', methods=['POST','GET'])
 def index_media():
     if request.method == 'GET':
@@ -173,6 +177,7 @@ def index_media():
     return render_template('media.html', uploaded_image=uploaded_image_url, processed_image=processed_image_url)
 
 
+#-------------------- video html ------------------------------#
 @app.route('/video', methods=['POST','GET'])
 def index_video():
     if request.method == 'GET':
@@ -220,6 +225,8 @@ def index_video():
     processed_video_url = os.path.relpath(result_path, parent_directory)
     return render_template('video.html', uploaded_video=uploaded_video_url, processed_video=processed_video_url)
 
+
+#-------------------- record html ------------------------------#
 @app.route('/record', methods=['POST','GET'])
 def index_record():
     directory = get_directory_structure(parent_directory+'/static/record')
@@ -246,6 +253,8 @@ def get_directory_structure(rootdir):
             directory_structure[dir] = os.listdir(os.path.join(root, dir))
     return directory_structure
 
+
+
 if __name__ == '__main__':
     # app.run(debug=True)
-    socketio.run(app,debug=True)
+    socketio.run(app,debug=True,host='0.0.0.0',port=5000)

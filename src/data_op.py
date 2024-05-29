@@ -68,7 +68,7 @@ def data_post_process(tensor):
         # print('j[l]:',j[l].shape,j[l])
         else:
             output[i] = j[l]
-        print(output[0].shape)
+        # print(output[0].shape)
     end_time = time.time()
     # global num 
     # if num < 3:
@@ -238,11 +238,11 @@ def data_paint(tensor,img,
                              [int(j[x[1]*3-3]*weight/640),int(j[x[1]*3-2]*height/640)],line_color,line_weight)
     
     end_time = time.time()
-    global num 
-    if num < 3:
-        print('paint : ',end_time-start_time)
-        num = num + 1
-    # print('paint : ',end_time-start_time)
+    # global num 
+    # if num < 3:
+    #     print('paint : ',end_time-start_time)
+    #     num = num + 1
+    print('paint : ',end_time-start_time)
     return img
 
 

@@ -6,21 +6,14 @@
 <title>Overlapping Images</title>
 <style>
     .container {
-        position: relative;
-        width: 300px;
-        height: 200px;
+        display: flex;
+        justify-content: space-around; /* 或者使用其他的 justify-content 属性来调整图片之间的间距 */
     }
 
     .image1 {
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-
-    .image2 {
-        position: absolute;
-        top: 0px;
-        left: 0px;
+        width: 50%; /* 这里的百分比可以根据你的需要来调整 */
+        max-width: 480px; /* 设置图片的最大宽度，避免在较大屏幕上图片过大 */
+        height: auto; /* 让浏览器根据宽度自动调整高度，以保持图片比例 */
     }
 </style>
 </head>
@@ -28,7 +21,7 @@
 
 <div class="container">
     <img src="/video_feed" alt="Image 1" class="image1">
-    <img src="/video_feed1" alt="Image 2" class="image2">
+    <img src="/video_feed1" alt="Image 2" class="image1">
 </div>
 
 </body>

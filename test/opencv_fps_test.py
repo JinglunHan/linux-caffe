@@ -16,6 +16,11 @@ if ai == True:
     device = 0
     net=model.load_model(model_id,device)
 
+lock = threading.Lock()
+lock1 = threading.Lock()
+lock2 = threading.Lock()
+
+
 # window_width = 640
 # window_height = 352
 # cv2.namedWindow('Network Stream', cv2.WINDOW_NORMAL)
@@ -23,7 +28,9 @@ if ai == True:
 
 def predict_and_append_result(net, img, result_list):
     output = model.predict(net, img)
+    lock.acquire
     result_list.append(output)
+    lock.release
 
 def pre_process_and_append_img(frame, img_list):
     img = data.data_pre_process(frame,task=1)
@@ -32,19 +39,23 @@ def pre_process_and_append_img(frame, img_list):
 def post_and_paint_append_jpg(result, frame,jpg_list):
     output = data.data_post_process(result)
     frame = data.data_paint(output, frame)
+    lock1.acquire
     jpg_list.append(frame)
+    lock1.release
 
 def show():
-    window_width = 640
-    window_height = 352
-    cv2.namedWindow('Network Stream', cv2.WINDOW_NORMAL)
-    cv2.resizeWindow('Network Stream', window_width, window_height)
+    # window_width = 640
+    # window_height = 352
+    # cv2.namedWindow('Network Stream', cv2.WINDOW_NORMAL)
+    # cv2.resizeWindow('Network Stream', window_width, window_height)
     while True:
         if jpg_list:
+
             cv2.imshow('Network Stream', jpg_list[0])
             # time0 =time.time()
             # cv2.imwrite( 'test_data/'+str(time0)+".png", jpg_list[0])
             del jpg_list[0]
+
             # if cv2.waitKey(1) & 0xFF == ord('q'):
             #     break
             
@@ -52,8 +63,8 @@ def show():
 # 创建一个空列表，用于存储结果
 img_list = []
 result_list = []
-jpg_list = []
-count,step = 0,5
+jpg_list = [] 
+count,step = 0,2
 
 show_thread = threading.Thread(target=show)
 show_thread.start()
@@ -71,13 +82,13 @@ while cap.isOpened():
 
     if img_list:
         predict_thread = threading.Thread(target=predict_and_append_result, args=(net, img_list[0], result_list))
-        del img_list[0]
         predict_thread.start()
+        del img_list[0]
     
     if result_list:
         paint_thread = threading.Thread(target=post_and_paint_append_jpg, args=(result_list[0], frame, jpg_list))
-        del result_list[0]
         paint_thread.start()
+        del result_list[0]
 
 
 
