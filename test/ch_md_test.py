@@ -8,19 +8,6 @@ import time
 import threading
 import multiprocessing
 
-url = 'static/move.mp4'
-output_path = 'static/'
-modelid = 1001
-device = 0
-cap = Media(url,1)
-#multithread
-tensor_list = []
-img_list = []
-lock = threading.Lock()
-lock1 = threading.Lock()
-done_target = False
-tensor_dict = {}
-img_dict = {}
 
 # region one model and one thread
 def one_and_one():
@@ -146,99 +133,111 @@ def oamd_paint(model,out):
             
 # endregion
 
-# region two model 
-def two_and_mul():
-    global tensor_dict,img_dict,done_target
-    time_start = time.time()
-    out = cv2.VideoWriter(output_path+'two_and_mul.mp4', cv2.VideoWriter_fourcc(*'mp4v'), cap.fps, (cap.width, cap.height))
-    model = Model(modelid, device)
-    model1 = Model(modelid, device)
-    paint_thread = threading.Thread(target=oamd_paint, args=(model,out))
-    paint_thread.start()
-    count = 0
-    step = 0
-    while cap.media.isOpened():
-        ret, frame = cap.media.read()
-        if not ret:
-            break
-        with lock1:
-            img_dict[count] = frame
-        if step == 1:
-            tensor_thread = threading.Thread(target=oamd_predict, args=(frame,model1,count))
-        else:
-            tensor_thread = threading.Thread(target=oamd_predict, args=(frame,model,count))
-        tensor_thread.start()
-        count += 1
-        print('count : ',count)
-    done_target = True
-    paint_thread.join()
-    time_end = time.time()
-    print('two_and_multi_dict takes time : ', time_end - time_start)
+# region  two_process()
 
-# endregion
-
-# region two process,one for predict and one for paint 
-process_tensor_dict = multiprocessing.Manager().dict()
-process_img_dict = multiprocessing.Manager().dict()
-process_done_target = multiprocessing.Manager().Value('i',0)
-lock3 = multiprocessing.Lock()
-lock4 = multiprocessing.Lock()
-
-def one_and_mulprocess_dict():
-    global tensor_dict,img_dict,done_target
-    time_start = time.time()
-    model = Model(modelid, device)
-    out = cv2.VideoWriter(output_path+'one_and_mulprocess_dict.mp4', cv2.VideoWriter_fourcc(*'mp4v'), cap.fps, (cap.width, cap.height))
-    paint_thread = threading.Thread(target=oamd_paint, args=(model,out))
-    paint_thread.start()
-    count = 0
-    while cap.media.isOpened():
-        ret, frame = cap.media.read()
-        if not ret:
-            break
-        with lock3:
-            process_img_dict[count] = frame
-        tensor_process = multiprocessing.Process(target=oamd_pro_predict, args=(frame,model,count))
-        tensor_process.start()
-        count += 1
-        print('count : ',count)
-    done_target = True
-    paint_thread.join()
-    time_end = time.time()
-    print('one_and_multi_dict takes time : ', time_end - time_start)
-
-def oamd_pro_predict(frame,model,count):
-    
-    tensor = model.predict(frame)
-    print('oamd process predict : ',count)
-    with lock4:
-        process_tensor_dict[count] = tensor
-
-def oamd_paint(model,out):
-    num = 0
+def load_model_and_predict(count_queue,num_queue,process_img_dict,process_tensor_dict):
+    print('load_model_and_predict start')
+    model = Model(modelid,device)
     while True:
-        with lock4:
-            if num in process_tensor_dict:
-                with lock3:
-                    img = process_img_dict[num]
-                
-                tensor = process_tensor_dict[num]
-                img = model.paint(img,tensor,save_image=False)
-                out.write(img)
-                with lock3:
-                    del process_img_dict[num]
-              
-                del tensor_dict[num]
-                print('num :',num)
-                num += 1
-            elif done_target:
-                break
-            
+        num = count_queue.get()
+        print('load and predict : ',num)
+        
+        if num == None:
+            print('process load and predict done ')
+            break
+        img = process_img_dict[num]
+        tensor = model.predict(img)
+        process_tensor_dict[num] = tensor
+        num_queue.put(num)
+    num_queue.put(None)
+
+def two_process(count_queue,process_img_dict):
+    cap = Media(url,1)
+    print('two_process start')
+    time_start = time.time()
+    count = 0
+    while cap.media.isOpened():
+        ret, frame = cap.media.read()
+        print('process add img : ',count)
+        if not ret:
+            break
+        process_img_dict[count] = frame
+        count_queue.put(count)
+        count += 1
+    time.sleep(1)
+    count_queue.put(None)
+
+def process_paint(num_queue,process_img_dict,process_tensor_dict):
+    global output_path
+    print('process_paint start')
+    model = Model(modelid,device)
+    out = cv2.VideoWriter(output_path+'two_process.mp4', cv2.VideoWriter_fourcc(*'mp4v'), cap.fps, (cap.width, cap.height))
+    num_list = []
+    num,count = 0,0
+    while True:
+        num = num_queue.get()
+        print('paint process : ',num,count)
+        if num == None and len(num_list)==1:
+            print('paint process done ')
+            break
+        num_list.append(num)
+        if count in num_list:
+            new_num_list = [num for num in num_list if num != count]
+            num_list = new_num_list
+            img = process_img_dict[count]
+            tensor = process_tensor_dict[count]
+            img = model.paint(img,tensor,save_image=False)
+            out.write(img)
+            del process_img_dict[count]
+            del process_tensor_dict[count]
+            count += 1
+
+
+
+
+
 # endregion
 
 
-#one_and_one()
-# one_and_multi()       
-# one_and_multi_dict()
-# two_and_mul()
-one_and_mulprocess_dict()
+if __name__ == '__main__':
+
+    url = 'static/move.mp4'
+    output_path = 'static/'
+    modelid = 1001
+    device = 0
+    cap = Media(url,1)
+    #multithread
+    tensor_list = []
+    img_list = []
+    lock = threading.Lock()
+    lock1 = threading.Lock()
+    done_target = False
+    tensor_dict = {}
+    img_dict = {}
+
+    process_img_dict = multiprocessing.Manager().dict()
+    process_tensor_dict = multiprocessing.Manager().dict()
+    count_queue = multiprocessing.Queue()
+    num_queue = multiprocessing.Queue()
+
+    # one_and_one()
+    # one_and_multi()        
+    # one_and_multi_dict()
+
+    pro_img = multiprocessing.Process(target=two_process, args=(count_queue,process_img_dict,))
+    # pro_img = threading.Thread(target=two_process, args=(count_queue,cap))
+    pro_img.start()
+
+    predict = multiprocessing.Process(target=load_model_and_predict, args=(count_queue,num_queue,process_img_dict,process_tensor_dict,))
+    predict.start()
+    # # predicts = [multiprocessing.Process(target=load_model_and_predict, args=(count_queue,num_queue)) 
+    # #              for _ in range(2)]
+    # # for predict in predicts:
+    # #     predict.start()
+
+    paint = multiprocessing.Process(target=process_paint, args=(num_queue,process_img_dict,process_tensor_dict,))
+    paint.start()
+
+    pro_img.join()
+    predict.join()
+    paint.join()
