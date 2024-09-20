@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Detect</title>
+</head>
+<body>
+    <form action="/detect" method="post" enctype="multipart/form-data">
+    {% include 'example/task.html' %}
+    <h2>choose model detect</h2>
+        <select name="model">
+            <option value=x8_yolov8m-pose>pose</option>
+            <option value=smokefire>smokefire</option>
+            <option value=helmet>helmet</option>
+            <option value=beltsprinklingcoal>beltsprinklingcoal</option>
+        </select>
+        <label for="date">Select a date:</label>
+        <input type="date" id="date" name="selected_date">
+    <input type="submit" name="model_choose" value="choose">
+    </form>
+    {% if result %}
+        {% for ymd_data in ymd_data_list %}
+        <ul>
+            <li>{{ ymd_data }}</li>
+        </ul>
+        {% endfor %}
+    {% endif %}
+
+    <div class="container">
+        {% for img_url in detect_url_list %}
+        <img class="image" src="{{ img_url }}" alt="Image 1">
+        {% endfor %}
+    </div>
+    
+
+</body>
+<style> 
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between; 
+    }
+
+    .image {
+        width: calc(33.33% - 10px); 
+        margin: 5px;
+        max-width: 480px; 
+        height: auto; 
+    }
+</style>
+</html>

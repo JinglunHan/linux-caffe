@@ -3,3 +3,6 @@ flask==2.2.5
 cupy==11.1.0
 Flask-SocketIO
 flask-cors
+dlib
+Flask-SQLAlchemy
+flask-migrate

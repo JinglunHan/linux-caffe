@@ -1,6 +1,7 @@
 *.caffemodel
 *.prototxt
 *.log
+*.pt
 models/*.caffemodel
 models/*.prototxt
 results

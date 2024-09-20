@@ -8,31 +8,34 @@
 </head>
 <body>
     <form action="/record" method="post" enctype="multipart/form-data">
-    {% include 'task.html' %}
+    {% include 'example/task.html' %}
     <h3>Record file</h3>
     <input id="fileInput" type="text" name="record_file_url">
     <input type="submit" name="url_submit" value="Submit">
     </form>
     <h2>Record List</h2>
-    <ul>
-        {% for folder, files in directory.items() %}
-        <li class="folder">{{ folder }}
-            <ul class="file" data-folder="{{ folder }}">
-                {% for file in files %}
-                <li class="file1" data-file="{{ file }}">{{ file }}</li>
-                {% endfor %}
-            </ul>
-        </li>
-        {% endfor %}
-    </ul>
-    {% if record_video %}
     <div class="container">
+        <div class="list_container">
+        <ul>
+            {% for folder, files in directory.items() %}
+            <li class="folder">{{ folder }}
+                <ul class="file" data-folder="{{ folder }}">
+                    {% for file in files %}
+                    <li class="file1" data-file="{{ file }}">{{ file }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul></div>
+    {% if record_video %}
+        <div class="video_container">
             <video controls class="video">
             <source src="{{ record_video }}" type="video/mp4">
             Your browser does not support the video tag.
             </video>
-    </div>
+        </div>
     {% endif %}
+    </div>
 </body>
 <style>
     /* 样式可根据需要进行调整 */
@@ -47,9 +50,18 @@
         display: none; /* 默认隐藏文件 */
         margin-left: 20px; /* 文件与文件夹之间的缩进 */
     }
+    .file1:hover{
+        color:blueviolet;
+    }
     .container {
         display: flex;
-        justify-content: space-around; /* 或者使用其他的 justify-content 属性来调整图片之间的间距 */
+        /* justify-content: space-around;  */
+    }
+    .list_container {
+        flex: 0 0 30%;
+    }
+    .video_container {
+        flex: 1;
     }
 
     .video {

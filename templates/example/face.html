@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Detect</title>
+</head>
+<body>
+    <form action="/face" method="post" enctype="multipart/form-data">
+    {% include 'example/task.html' %}
+    <h2>Upload human photo</h2>
+        <input type="file" name="file1" accept="image/*">
+        <input type="text" name="username">
+        <input type="submit" name="face_submit" value="enter face">
+        <input type="file" name="file2" accept="image/*">
+        <input type="submit" name="face_detect" value="detect face">
+    </form><br><br>
+    {% if result %}
+    <h1>Users</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <table>
+        <thead>
+            <tr>
+                <th>FaceID</th>
+                <th>FaceName</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for face in faces %}
+                <tr>
+                    <td>{{ face.id }}</td>
+                    <td>{{ face.user_id }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    <div class="container">
+        {% for img_url,name in img_list  %}
+        <img class="image" src="{{ img_url }}" alt="Image 1">{{name}}
+        {% endfor %}
+    </div>
+</body>
+<style> 
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between; 
+    }
+
+    .image {
+        width: calc(33.33% - 10px); 
+        margin: 5px;
+        max-width: 352px; 
+        height: auto; 
+    }
+</style>
+</html>

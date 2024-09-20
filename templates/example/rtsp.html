@@ -8,7 +8,7 @@
 </head>
 <body>
     <form action="/rtsp" method="post" enctype="multipart/form-data">
-            {% include 'task.html' %}
+            {% include 'example/task.html' %}
             <h2>RTSP</h2>
             <label for="input_text">RTSP URL:</label>
             <input type="text" name="rtsp_url">
@@ -24,23 +24,26 @@
 
             </select>
             <input type="submit" name="url_submit" value="Submit">{{url_valid}}
+            <input type="submit" name="channel_close" value="close all">
             <br><br>
     </form>
 
     {% if rtsp_valid %}
     <form action="/rtsp_detect" method="post" enctype="multipart/form-data">
-        {% include 'model.html' %}
-        <input type="submit" name="model_choose" value="detect"><br>
+        {% include 'example/model.html' %}
+        <input type="submit" name="model_choose" value="detect">
+        <input type="submit" name="model_reload" value="reload">
+        <br>
     </form><br>
 
     <img src="/rtsp_show/1" alt="Image 1" class="image1">
     <img src="/rtsp_show/2" alt="Image 2" class="image1">
-    <img src="/rtsp_show/3" alt="Image 3" class="image1">
+    <!-- <img src="/rtsp_show/3" alt="Image 3" class="image1">
     <img src="/rtsp_show/4" alt="Image 4" class="image1">
     <img src="/rtsp_show/5" alt="Image 5" class="image1">
     <img src="/rtsp_show/6" alt="Image 6" class="image1">
     <img src="/rtsp_show/7" alt="Image 7" class="image1">
-    <img src="/rtsp_show/8" alt="Image 8" class="image1">
+    <img src="/rtsp_show/8" alt="Image 8" class="image1"> -->
         {% if detect_rtsp %}
         <img id="rtsp_detect_0" src="" alt="detected image" class="image1">
         {% endif %}

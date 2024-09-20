@@ -20,8 +20,8 @@
 </style>
 <body>
     <form action="/video" method="post" enctype="multipart/form-data">
-        {% include 'task.html' %}
-        {% include 'model.html' %}
+        {% include 'example/task.html' %}
+        {% include 'example/model.html' %}
         <h2>Video</h2>
         <input type="file" name="file" accept="video/*">
         <input type="submit" value="Upload">
